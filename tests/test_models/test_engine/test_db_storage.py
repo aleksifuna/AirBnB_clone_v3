@@ -68,21 +68,42 @@ test_db_storage.py'])
                             "{:s} method needs a docstring".format(func[0]))
 
 
-class TestFileStorage(unittest.TestCase):
-    """Test the FileStorage class"""
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+class TestDBStorage(unittest.TestCase):
+    """Test the DBStorage class"""
     def test_all_returns_dict(self):
         """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+        storage = DBStorage()
+        storage.reload()
+        all_objects = storage.all()
+        self.assertIs(type(all_objects), dict)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_new(self):
         """test that new adds an object to the database"""
+        storage = DBStorage()
+        state = State(name="Nairobi")
+        storage.new(state)
+        self.assertIn(state, storage._DBStorage__sessiom)
 
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
     def test_save(self):
-        """Test that save properly saves objects to file.json"""
+        """Test that save properly saves objects"""
+        storage = DBStorage()
+        state = State(name="Nairobi")
+        storage.new(state)
+        storage.save()
+        self.assertIn(state, storage._DBStorage.__session)
+
+    def test_get(self):
+        """Tests that get returns the right object"""
+        storage = DBStorage()
+        state = State(name="Nairobi")
+        storage.new(state)
+        storage.save()
+        get_state = storage.get(State, state.id)
+        self.assertEqual(state, get_state)
+
+    def test_count(self):
+        """Tests that count method returns the right count"""
+        storage = DBStorage()
+        storage.reload()
+        count = storage.count(State)
+        self.assertEqual(count, len(storage.all(State)))

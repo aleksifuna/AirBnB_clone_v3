@@ -37,7 +37,7 @@ class FileStorage:
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
         if obj is not None:
-            key = obj.__class__.__name__ + "." + obj.id
+            key = obj.__class__.__name__ + '.' + obj.id
             self.__objects[key] = obj
 
     def save(self):
@@ -75,15 +75,15 @@ class FileStorage:
             all_objects = self.all(cls)
 
             for key, value in all_objects.items():
-                if value.id == id:
+                if key.split(".")[1] == id:
                     return value
-            return None
+        return None
 
     def count(self, cls=None):
         """ returns the number of class objects """
-        cls = str(cls)
-        if cls and cls in classes.keys():
-            all_objects = FileStorage.all(cls)
-            return len(all_objects)
-        elif cls is None:
-            return len(FileStorage.all())
+        if cls is None:
+            return len(self.all())
+        cls_name = cls.__name___
+        classes = {k: v for k, v in self.all().items(
+            ) if v.__class__.name__ == cls_name}
+        return len(classes)
