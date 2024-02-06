@@ -9,3 +9,4 @@ from . import index
 from . import cities
 from . import users
 from . import places_reviews
+from . import states
