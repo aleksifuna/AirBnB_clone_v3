@@ -11,4 +11,3 @@ from api.v1.views.cities import *
 from . import users
 from . import places_reviews
 from . import states
-from . import amenities
