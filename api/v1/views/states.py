@@ -5,7 +5,7 @@ a new view for State objects that handles all default RESTFul API actions
 
 from . import app_views
 from models.base_model import BaseModel
-from flask import Flask, abort, request, make_response
+from flask import Flask, abort, request, make_response, jsonify
 from models.state import State
 from models import storage
 
@@ -74,4 +74,4 @@ def states(state_id=None):
         for obj in state_obj.values():
             obj_list.append(obj.to_dict())
 
-        return obj_list
+        return jsonify(obj_list)
