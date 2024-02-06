@@ -75,6 +75,7 @@ def update_state(state_id):
             for key, value in request.get_json().items():
                 if key not in ['id', 'created_at', 'updated_at']:
                     setattr(state, key, value)
+            state.save()
             return state.to_dict(), 200
         else:
             return jsonify({"error": "Not a JSON"}), 400
