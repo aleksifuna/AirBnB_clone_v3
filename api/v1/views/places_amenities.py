@@ -20,7 +20,7 @@ def get_place_amenites(place_id):
     if place is None:
         abort(404)
     amenities = [amenity.to_dict() for amenity in place.amenities]
-    return jsonify(amenites), 200
+    return jsonify(amenities), 200
 
 
 @app_views.route(
