@@ -11,3 +11,4 @@ from . import users
 from . import places_reviews
 from . import states
 from . import amenities
+from . import places
